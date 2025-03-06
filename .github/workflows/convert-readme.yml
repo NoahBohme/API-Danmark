@@ -1,0 +1,33 @@
+name: Convert README.md to JSON
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  convert-readme:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Tjek koden ud
+        uses: actions/checkout@v3
+
+      - name: Opsæt Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+
+      - name: Installer afhængigheder
+        run: |
+          pip install markdown
+
+      - name: Kør script der konverterer README.md til JSON
+        run: |
+          python scripts/parse_readme.py
+
+      - name: Upload JSON som artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: readme-json
+          path: readme.json
