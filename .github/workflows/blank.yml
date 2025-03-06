@@ -22,7 +22,7 @@ jobs:
 
       - name: Convert README to JSON
         run: |
-          python3 -c """
+          python3 - <<EOF
 import json
 import markdown2
 import re
@@ -48,7 +48,7 @@ for section in sections[1:]:
 
 with open('README.json', 'w', encoding='utf-8') as f:
     json.dump(api_data, f, indent=2, ensure_ascii=False)
-          """
+EOF
 
       - name: Commit and push changes
         run: |
